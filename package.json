@@ -10,7 +10,6 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "dependencies": {
-    "@module-federation/vite": "^0.2.8",
     "@remix-run/css-bundle": "0.0.0-nightly-63a5c6c-20231017",
     "@remix-run/node": "0.0.0-nightly-63a5c6c-20231017",
     "@remix-run/react": "0.0.0-nightly-63a5c6c-20231017",

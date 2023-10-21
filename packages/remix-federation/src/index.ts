@@ -1,7 +1,22 @@
+import { createEsBuildAdapter } from "@softarc/native-federation-esbuild";
 import { BuildHelperParams, federationBuilder } from "@softarc/native-federation/build.js";
 import MagicString from "magic-string";
 import { Plugin } from "vite";
 import externalize from "vite-plugin-externalize-dependencies";
+
+const defaultOptions = {
+  workspaceRoot: process.cwd(),
+  outputPath: "public/build",
+  tsConfig: "tsconfig.json",
+  federationConfig: "config/federation.config.cjs",
+  verbose: false,
+  dev: true,
+};
+
+type PluginOptions = {
+  options?: Partial<BuildHelperParams["options"]>;
+  adapter?: BuildHelperParams["adapter"];
+};
 
 /**
  * Creates a Vite plugin that implements native module federation for remix
@@ -11,13 +26,27 @@ import externalize from "vite-plugin-externalize-dependencies";
  * @returns The Vite plugin.
  */
 export default async function vitePluginRemixFederation(
-  params: BuildHelperParams,
+  options?: PluginOptions,
 ): Promise<Plugin[]> {
-  await federationBuilder.init(params);
+  async function initFederation() {
+    return federationBuilder.init({
+      options: { ...defaultOptions, ...options?.options },
+      adapter: options?.adapter ?? createEsBuildAdapter({ plugins: [] }),
+    });
+  }
+
+  // Initial init to get externals for the externalize plugin
+  await initFederation();
+
   return [
     externalize({ externals: federationBuilder.externals }),
     {
       name: "vite-plugin-remix-federation",
+      async configResolved(config) {
+        // Second init to automatically set development option
+        defaultOptions.dev = config.command === "serve";
+        await initFederation();
+      },
       async buildStart() {
         await federationBuilder.build({ skipMappingsAndExposed: true });
       },

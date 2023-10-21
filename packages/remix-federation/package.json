@@ -1,7 +1,7 @@
 {
   "name": "remix-federation",
   "version": "0.1.0",
-  "description": "Vite/Rollup plugin for Remix native module federation using import maps",
+  "description": "Vite plugin for Remix native module federation using import maps",
   "type": "module",
   "source": "src/index.ts",
   "main": "./lib/index.cjs",
@@ -10,9 +10,7 @@
     "lib/**/*"
   ],
   "scripts": {
-    "format": "pretty-quick",
-    "dev": "microbundle watch",
-    "build": "rimraf lib && microbundle --no-sourcemap --compress=false"
+
   },
   "repository": {
     "type": "git",
