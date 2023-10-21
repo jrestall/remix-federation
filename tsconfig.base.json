@@ -1,0 +1,13 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "paths": {
+            "remix-federation": [
+                "packages/remix-federation/src/index.ts"
+            ],
+        }
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
