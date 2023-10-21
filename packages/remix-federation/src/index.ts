@@ -1,22 +1,24 @@
 import { createEsBuildAdapter } from "@softarc/native-federation-esbuild";
 import { BuildHelperParams, federationBuilder } from "@softarc/native-federation/build.js";
+import { FederationConfig } from "@softarc/native-federation/src/lib/config/federation-config";
 import MagicString from "magic-string";
 import { Plugin } from "vite";
 import externalize from "vite-plugin-externalize-dependencies";
+import { writeFederationConfig } from "./config";
 
 const defaultOptions = {
   workspaceRoot: process.cwd(),
   outputPath: "public/build",
   tsConfig: "tsconfig.json",
-  federationConfig: "config/federation.config.cjs",
+  federationConfig: "node_modules/.tmp/federation.config.cjs",
   verbose: false,
   dev: true,
 };
 
-type PluginOptions = {
+export type PluginConfig = {
   options?: Partial<BuildHelperParams["options"]>;
   adapter?: BuildHelperParams["adapter"];
-};
+} & FederationConfig;
 
 /**
  * Creates a Vite plugin that implements native module federation for remix
@@ -25,13 +27,17 @@ type PluginOptions = {
  *
  * @returns The Vite plugin.
  */
-export default async function vitePluginRemixFederation(
-  options?: PluginOptions,
-): Promise<Plugin[]> {
-  async function initFederation() {
+export default async function vitePluginRemixFederation(config?: PluginConfig): Promise<Plugin[]> {
+  async function initFederation(initConfig: boolean = true) {
+    const resolvedOptions = { ...defaultOptions, ...config?.options };
+
+    if (initConfig && config && !config.options?.federationConfig) {
+      writeFederationConfig(config, resolvedOptions);
+    }
+
     return federationBuilder.init({
-      options: { ...defaultOptions, ...options?.options },
-      adapter: options?.adapter ?? createEsBuildAdapter({ plugins: [] }),
+      options: resolvedOptions,
+      adapter: config?.adapter ?? createEsBuildAdapter({ plugins: [] }),
     });
   }
 
@@ -45,7 +51,7 @@ export default async function vitePluginRemixFederation(
       async configResolved(config) {
         // Second init to automatically set development option
         defaultOptions.dev = config.command === "serve";
-        await initFederation();
+        await initFederation(false);
       },
       async buildStart() {
         await federationBuilder.build({ skipMappingsAndExposed: true });

@@ -8,11 +8,22 @@ const remixConfig: AppConfig = {
   ignoredRouteFiles: ["**/.*"],
 };
 
+const federationConfig = {
+  name: "host",
+  remotes: {
+    remote1: "remote1@http://localhost:5174/build/remoteEntry.js",
+  },
+  shared: {
+    react: { singleton: true },
+    "react-dom": { singleton: true },
+  },
+};
+
 export default defineConfig(async ({ command }) => {
   return {
     optimizeDeps: {
       include: ["react-dom/client", "react/jsx-dev-runtime"],
     },
-    plugins: [tsconfigPaths(), remix(remixConfig), remixFederation()],
+    plugins: [tsconfigPaths(), remix(remixConfig), remixFederation(federationConfig)],
   };
 });

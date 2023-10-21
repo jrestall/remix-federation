@@ -1,5 +1,3 @@
 export default function Component() {
-    return (
-      <div>HOST</div>
-    )
+  return <div>HOST</div>;
 }
