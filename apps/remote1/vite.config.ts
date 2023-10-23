@@ -11,7 +11,7 @@ const remixConfig: AppConfig = {
 const federationConfig = {
   name: "remote1",
   shared: {
-    "react": { singleton: true },
+    react: { singleton: true },
     "react-dom": { singleton: true },
     "@remix-run/react": { singleton: true },
     "@remix-run/router": { singleton: true },

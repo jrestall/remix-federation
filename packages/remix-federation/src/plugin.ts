@@ -86,14 +86,13 @@ export default async function vitePluginRemixFederation(
         // https://github.com/guybedford/es-module-shims#shim-mode
         // https://github.com/guybedford/es-module-shims#preload-shim
         if (
-          id.includes("@remix-run/react") ||
+          id.match(/^@remix-run\/react/g) ||
           id.includes("@remix-run_react") ||
           id.includes("@remix-run/react/dist/esm/components.js")
         ) {
           const magicString = new MagicString(code);
           magicString.replaceAll('type: "module"', 'type: "module-shim"');
           magicString.replaceAll('rel: "modulepreload"', 'rel: "modulepreload-shim"');
-          console.log(id + " REPLACED");
           return {
             code: magicString.toString(),
             map: magicString.generateMap(),
@@ -117,6 +116,10 @@ export default async function vitePluginRemixFederation(
       },
       async buildStart() {
         // Build native federation files such as remoteEntry.js and shared deps
+        await federationBuilder.build({ skipMappingsAndExposed: true });
+      },
+      async configureServer() {
+        // Rebuild on dev server restart
         await federationBuilder.build({ skipMappingsAndExposed: true });
       },
     },
