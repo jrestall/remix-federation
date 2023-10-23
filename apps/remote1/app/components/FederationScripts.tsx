@@ -12,20 +12,15 @@ export function FederationScripts() {
         type="importmap-shim"
         dangerouslySetInnerHTML={{
           __html: `{
-              "imports":{
-                "react": "https://ga.jspm.io/npm:react@18.2.0/dev.index.js",
-                "react-dom": "https://ga.jspm.io/npm:react-dom@18.2.0/dev.index.js",
-                "@remix-run/react":"/build/_remix_run_react-0_0_0_nightly_63a5c6c_20231017-dev.js",
-                "@remix-run/router":"/build/_remix_run_router-1_10_0-dev.js",
-                "react-router": "/build/react_router-6_17_0-dev.js",
-                "react-router-dom":"/build/react_router_dom-6_17_0-dev.js"
-              },
-              "scopes": {
-                "https://ga.jspm.io/": {
-                  "scheduler": "https://ga.jspm.io/npm:scheduler@0.23.0/dev.index.js"
-                }
-              }
-            }`,
+            "imports":{
+              "react": "https://esm.sh/react@18.2.0?dev",
+              "react-dom": "https://esm.sh/react-dom@18.2.0?dev",
+              "@remix-run/router": "/build/_remix_run_router-1_10_0-dev.js",
+              "@remix-run/react": "/build/_remix_run_react-0_0_0_nightly_63a5c6c_20231017-dev.js",
+              "react-router": "/build/react_router-6_17_0-dev.js",
+              "react-router-dom": "/build/react_router_dom-6_17_0-dev.js"
+            }
+          }`,
         }}
       />
     </>
