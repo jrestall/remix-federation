@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@module-federation/vite':
-        specifier: ^0.2.8
-        version: 0.2.8(@softarc/native-federation@2.0.4)
       '@remix-run/css-bundle':
         specifier: 0.0.0-nightly-63a5c6c-20231017
         version: 0.0.0-nightly-63a5c6c-20231017
@@ -21,7 +18,7 @@ importers:
         specifier: 0.0.0-nightly-63a5c6c-20231017
         version: 0.0.0-nightly-63a5c6c-20231017(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@remix-run/router':
-        specifier: ^1.10.0
+        specifier: 1.10.0
         version: 1.10.0
       '@remix-run/serve':
         specifier: 0.0.0-nightly-63a5c6c-20231017
@@ -41,6 +38,9 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      react-router:
+        specifier: 6.17.0
+        version: 6.17.0(react@18.2.0)
       react-router-dom:
         specifier: 6.17.0
         version: 6.17.0(react-dom@18.2.0)(react@18.2.0)
@@ -91,7 +91,7 @@ importers:
         specifier: 0.0.0-nightly-63a5c6c-20231017
         version: 0.0.0-nightly-63a5c6c-20231017(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@remix-run/router':
-        specifier: ^1.10.0
+        specifier: 1.10.0
         version: 1.10.0
       '@remix-run/serve':
         specifier: 0.0.0-nightly-63a5c6c-20231017
@@ -111,6 +111,85 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      react-router:
+        specifier: 6.17.0
+        version: 6.17.0(react@18.2.0)
+      react-router-dom:
+        specifier: 6.17.0
+        version: 6.17.0(react-dom@18.2.0)(react@18.2.0)
+      remix-federation:
+        specifier: workspace:*
+        version: link:../../packages/remix-federation
+    devDependencies:
+      '@remix-run/dev':
+        specifier: 0.0.0-nightly-63a5c6c-20231017
+        version: 0.0.0-nightly-63a5c6c-20231017(@remix-run/serve@0.0.0-nightly-63a5c6c-20231017)(typescript@5.2.2)(vite@4.5.0)
+      '@remix-run/eslint-config':
+        specifier: 0.0.0-nightly-63a5c6c-20231017
+        version: 0.0.0-nightly-63a5c6c-20231017(eslint@8.38.0)(react@18.2.0)(typescript@5.2.2)
+      '@types/react':
+        specifier: ^18.2.20
+        version: 18.2.20
+      '@types/react-dom':
+        specifier: ^18.2.7
+        version: 18.2.7
+      eslint:
+        specifier: ^8.38.0
+        version: 8.38.0
+      prettier:
+        specifier: ^3.0.3
+        version: 3.0.3
+      turbo:
+        specifier: ^1.10.15
+        version: 1.10.15
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+      vite:
+        specifier: ^4.5.0
+        version: 4.5.0(@types/node@20.8.7)
+      vite-tsconfig-paths:
+        specifier: ^4.2.1
+        version: 4.2.1(typescript@5.2.2)(vite@4.5.0)
+      vitest:
+        specifier: ^0.34.6
+        version: 0.34.6
+
+  apps/remote1:
+    dependencies:
+      '@remix-run/css-bundle':
+        specifier: 0.0.0-nightly-63a5c6c-20231017
+        version: 0.0.0-nightly-63a5c6c-20231017
+      '@remix-run/node':
+        specifier: 0.0.0-nightly-63a5c6c-20231017
+        version: 0.0.0-nightly-63a5c6c-20231017(typescript@5.2.2)
+      '@remix-run/react':
+        specifier: 0.0.0-nightly-63a5c6c-20231017
+        version: 0.0.0-nightly-63a5c6c-20231017(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@remix-run/router':
+        specifier: 1.10.0
+        version: 1.10.0
+      '@remix-run/serve':
+        specifier: 0.0.0-nightly-63a5c6c-20231017
+        version: 0.0.0-nightly-63a5c6c-20231017(typescript@5.2.2)
+      '@softarc/native-federation':
+        specifier: ^2.0.4
+        version: 2.0.4
+      '@softarc/native-federation-esbuild':
+        specifier: ^2.0.4
+        version: 2.0.4(@softarc/native-federation-runtime@2.0.4)(@softarc/native-federation@2.0.4)
+      isbot:
+        specifier: ^3.6.8
+        version: 3.6.8
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      react-router:
+        specifier: 6.17.0
+        version: 6.17.0(react@18.2.0)
       react-router-dom:
         specifier: 6.17.0
         version: 6.17.0(react-dom@18.2.0)(react@18.2.0)
@@ -1100,14 +1179,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
-
-  /@module-federation/vite@0.2.8(@softarc/native-federation@2.0.4):
-    resolution: {integrity: sha512-9sGbJjUwfOUoDReaE/HcnYcfB4ZmsUIyvmmZnzwTD0WEbJFQBvz1+sEPNBh0hTIuPE5Jqs0D4ueoXTNAU/7DQA==}
-    peerDependencies:
-      '@softarc/native-federation': ^2.0.2
-    dependencies:
-      '@softarc/native-federation': 2.0.4
-    dev: false
 
   /@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1:
     resolution: {integrity: sha512-54/JRvkLIzzDWshCWfuhadfrfZVPiElY8Fcgmg1HroEly/EDSszzhBAsarCux+D/kOslTRquNzuyGSmUSTTHGg==}

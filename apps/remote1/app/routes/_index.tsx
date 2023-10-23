@@ -11,15 +11,10 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Remix (Host)</h1>
+      <h1>Welcome to Remix (Remote)</h1>
       <ul>
         <li>
-          <Link to="/host">
-            HOST
-          </Link>
-        </li>
-        <li>
-          <Link to="/remote/blog">
+          <Link to="/remote">
             REMOTE
           </Link>
         </li>

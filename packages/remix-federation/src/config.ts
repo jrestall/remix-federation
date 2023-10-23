@@ -12,5 +12,8 @@ export function writeFederationConfig(
   const normalizedConfig = withNativeFederation(config);
 
   const configPath = path.join(options.workspaceRoot!, options.federationConfig!);
+  const configDir = path.dirname(configPath);
+
+  fs.mkdirSync(configDir, { recursive: true });
   fs.writeFileSync(configPath, `module.exports = ${JSON.stringify(normalizedConfig, null, 2)}`);
 }

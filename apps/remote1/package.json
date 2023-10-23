@@ -1,13 +1,13 @@
 {
-  "name": "remix-microfrontends",
-  "version": "0.0.0",
+  "name": "remote1",
   "private": true,
+  "sideEffects": false,
+  "type": "module",
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "test": "turbo run test --parallel",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "dev": "vite dev --port 5174",
+    "build": "vite build && vite build --ssr",
+    "serve": "node server.js",
+    "typecheck": "tsc"
   },
   "dependencies": {
     "@remix-run/css-bundle": "0.0.0-nightly-63a5c6c-20231017",
@@ -28,16 +28,15 @@
     "@remix-run/eslint-config": "0.0.0-nightly-63a5c6c-20231017",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
-    "eslint": "^8.38.0",
     "prettier": "^3.0.3",
     "turbo": "^1.10.15",
     "typescript": "^5.2.2",
     "vite": "^4.5.0",
     "vite-tsconfig-paths": "^4.2.1",
-    "vitest": "^0.34.6"
+    "vitest": "^0.34.6",
+    "eslint": "^8.38.0"
   },
   "engines": {
-    "node": ">=14.0.0"
-  },
-  "packageManager": "pnpm@8.9.2"
+    "node": ">=18.0.0"
+  }
 }

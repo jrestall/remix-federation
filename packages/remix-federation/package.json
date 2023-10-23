@@ -4,7 +4,7 @@
   "description": "Vite plugin for Remix native module federation using import maps",
   "type": "module",
   "source": "src/index.ts",
-  "main": "./lib/index.cjs",
+  "main": "src/index.ts",
   "types": "lib/index.d.ts",
   "files": [
     "lib/**/*"
