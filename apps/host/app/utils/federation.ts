@@ -1,3 +1,5 @@
+import { matchRoutes } from "@remix-run/react";
+
 const IS_FETCH_PATCHED: unique symbol = Symbol("isFetchPatched");
 
 export function setupFederation() {
@@ -12,9 +14,12 @@ export function setupFederation() {
       const url = new URL(input);
       const routeId = url.searchParams.get("_data");
       if (routeId) {
-        url.searchParams.set("_data", "routes/remote.$");
-        url.searchParams.set("_remoteData", routeId);
-        input = url;
+        const splatRouteId = getMatchingSplatRoute(url);
+        if (splatRouteId) {
+          url.searchParams.set("_data", splatRouteId);
+          url.searchParams.set("_remoteData", routeId);
+          input = url;
+        }
       }
     }
 
@@ -27,4 +32,15 @@ export function setupFederation() {
     configurable: true,
     value: true,
   });
+}
+
+export function getMatchingSplatRoute(url: URL) {
+  // Gets all splat routes and returns the first that matches the requested url.
+  const routes = Object.values(window.__remixManifest.routes);
+  const splatRoutes = routes.filter((route) => route.id.endsWith("$"));
+
+  const matches = matchRoutes(splatRoutes, { pathname: url.pathname });
+  if (!matches || matches.length === 0) return;
+
+  return matches[0].route.id;
 }
