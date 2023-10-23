@@ -1,9 +1,15 @@
-import { Link, Outlet } from "@remix-run/react";
+import { Link, Outlet, useLoaderData } from "@remix-run/react";
+
+export function loader() {
+  return { title: "Layout loader data" };
+}
 
 export default function Component() {
+  const data = useLoaderData<typeof loader>();
   return (
     <>
       <div>REMOTE (Parent Route)</div>
+      {data.title}
       <Outlet />
       <ul>
         <li>
