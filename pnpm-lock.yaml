@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@remix-run/react@0.0.0-nightly-63a5c6c-20231017':
+    hash: mtq733df4bansho43cqdcrgmqq
+    path: patches/@remix-run__react@0.0.0-nightly-63a5c6c-20231017.patch
+
 importers:
 
   .:
@@ -16,7 +21,7 @@ importers:
         version: 0.0.0-nightly-63a5c6c-20231017(typescript@5.2.2)
       '@remix-run/react':
         specifier: 0.0.0-nightly-63a5c6c-20231017
-        version: 0.0.0-nightly-63a5c6c-20231017(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+        version: 0.0.0-nightly-63a5c6c-20231017(patch_hash=mtq733df4bansho43cqdcrgmqq)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@remix-run/router':
         specifier: 1.10.0
         version: 1.10.0
@@ -89,7 +94,7 @@ importers:
         version: 0.0.0-nightly-63a5c6c-20231017(typescript@5.2.2)
       '@remix-run/react':
         specifier: 0.0.0-nightly-63a5c6c-20231017
-        version: 0.0.0-nightly-63a5c6c-20231017(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+        version: 0.0.0-nightly-63a5c6c-20231017(patch_hash=mtq733df4bansho43cqdcrgmqq)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@remix-run/router':
         specifier: 1.10.0
         version: 1.10.0
@@ -165,7 +170,7 @@ importers:
         version: 0.0.0-nightly-63a5c6c-20231017(typescript@5.2.2)
       '@remix-run/react':
         specifier: 0.0.0-nightly-63a5c6c-20231017
-        version: 0.0.0-nightly-63a5c6c-20231017(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+        version: 0.0.0-nightly-63a5c6c-20231017(patch_hash=mtq733df4bansho43cqdcrgmqq)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@remix-run/router':
         specifier: 1.10.0
         version: 1.10.0
@@ -1424,7 +1429,7 @@ packages:
       stream-slice: 0.1.2
       typescript: 5.2.2
 
-  /@remix-run/react@0.0.0-nightly-63a5c6c-20231017(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
+  /@remix-run/react@0.0.0-nightly-63a5c6c-20231017(patch_hash=mtq733df4bansho43cqdcrgmqq)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-uMxt6gtQaMQ4rw2BdYF1PKWa2W3/vnONIcODilYuHxkxKYaEupa3vDWEYAgYeykLnKD3k/K/TCShQH/icThqrA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
@@ -1442,6 +1447,7 @@ packages:
       react-router-dom: 6.17.0(react-dom@18.2.0)(react@18.2.0)
       typescript: 5.2.2
     dev: false
+    patched: true
 
   /@remix-run/router@1.10.0:
     resolution: {integrity: sha512-Lm+fYpMfZoEucJ7cMxgt4dYt8jLfbpwRCzAjm9UgSLOkmlqo9gupxt6YX3DY0Fk155NT9l17d/ydi+964uS9Lw==}

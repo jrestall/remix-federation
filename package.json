@@ -13,15 +13,15 @@
     "@remix-run/css-bundle": "0.0.0-nightly-63a5c6c-20231017",
     "@remix-run/node": "0.0.0-nightly-63a5c6c-20231017",
     "@remix-run/react": "0.0.0-nightly-63a5c6c-20231017",
-    "@remix-run/serve": "0.0.0-nightly-63a5c6c-20231017",
     "@remix-run/router": "1.10.0",
-    "react-router": "6.17.0",
-    "react-router-dom": "6.17.0",
+    "@remix-run/serve": "0.0.0-nightly-63a5c6c-20231017",
     "@softarc/native-federation": "^2.0.4",
     "@softarc/native-federation-esbuild": "^2.0.4",
     "isbot": "^3.6.8",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router": "6.17.0",
+    "react-router-dom": "6.17.0"
   },
   "devDependencies": {
     "@remix-run/dev": "0.0.0-nightly-63a5c6c-20231017",
@@ -39,5 +39,10 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "packageManager": "pnpm@8.9.2"
+  "packageManager": "pnpm@8.9.2",
+  "pnpm": {
+    "patchedDependencies": {
+      "@remix-run/react@0.0.0-nightly-63a5c6c-20231017": "patches/@remix-run__react@0.0.0-nightly-63a5c6c-20231017.patch"
+    }
+  }
 }

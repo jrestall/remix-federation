@@ -1,0 +1,74 @@
+diff --git a/dist/components.js b/dist/components.js
+index 67b917d5c5b0171b1e6137669f634cdabfa9695e..d45b4698242a9257d05747103d3f88828512186e 100644
+--- a/dist/components.js
++++ b/dist/components.js
+@@ -284,7 +284,7 @@ function PrefetchPageLinksImpl({
+     href: href
+   }, linkProps))), moduleHrefs.map(href => /*#__PURE__*/React__namespace.createElement("link", _rollupPluginBabelHelpers["extends"]({
+     key: href,
+-    rel: "modulepreload",
++    rel: "modulepreload-shim",
+     href: href
+   }, linkProps))), keyedPrefetchLinks.map(({
+     key,
+@@ -546,7 +546,7 @@ import(${JSON.stringify(manifest.entry.module)});`;
+     })), /*#__PURE__*/React__namespace.createElement("script", _rollupPluginBabelHelpers["extends"]({}, props, {
+       suppressHydrationWarning: true,
+       dangerouslySetInnerHTML: markup.createHtml(routeModulesScript),
+-      type: "module",
++      type: "module-shim",
+       async: true
+     })));
+     // disabled deps array because we are purposefully only rendering this once
+@@ -581,12 +581,12 @@ import(${JSON.stringify(manifest.entry.module)});`;
+   }).flat(1);
+   let preloads = isHydrated ? [] : manifest.entry.imports.concat(routePreloads);
+   return isHydrated ? null : /*#__PURE__*/React__namespace.createElement(React__namespace.Fragment, null, /*#__PURE__*/React__namespace.createElement("link", {
+-    rel: "modulepreload",
++    rel: "modulepreload-shim",
+     href: manifest.entry.module,
+     crossOrigin: props.crossOrigin
+   }), dedupe(preloads).map(path => /*#__PURE__*/React__namespace.createElement("link", {
+     key: path,
+-    rel: "modulepreload",
++    rel: "modulepreload-shim",
+     href: path,
+     crossOrigin: props.crossOrigin
+   })), initialScripts, deferredScripts);
+diff --git a/dist/esm/components.js b/dist/esm/components.js
+index 7638182f11ab655d202114bb9a95be4e6290d8c6..8acc58dadb06a3f01dbbfcd670e79d77ec8a9c50 100644
+--- a/dist/esm/components.js
++++ b/dist/esm/components.js
+@@ -260,7 +260,7 @@ function PrefetchPageLinksImpl({
+     href: href
+   }, linkProps))), moduleHrefs.map(href => /*#__PURE__*/React.createElement("link", _extends({
+     key: href,
+-    rel: "modulepreload",
++    rel: "modulepreload-shim",
+     href: href
+   }, linkProps))), keyedPrefetchLinks.map(({
+     key,
+@@ -522,7 +522,7 @@ import(${JSON.stringify(manifest.entry.module)});`;
+     })), /*#__PURE__*/React.createElement("script", _extends({}, props, {
+       suppressHydrationWarning: true,
+       dangerouslySetInnerHTML: createHtml(routeModulesScript),
+-      type: "module",
++      type: "module-shim",
+       async: true
+     })));
+     // disabled deps array because we are purposefully only rendering this once
+@@ -557,12 +557,12 @@ import(${JSON.stringify(manifest.entry.module)});`;
+   }).flat(1);
+   let preloads = isHydrated ? [] : manifest.entry.imports.concat(routePreloads);
+   return isHydrated ? null : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("link", {
+-    rel: "modulepreload",
++    rel: "modulepreload-shim",
+     href: manifest.entry.module,
+     crossOrigin: props.crossOrigin
+   }), dedupe(preloads).map(path => /*#__PURE__*/React.createElement("link", {
+     key: path,
+-    rel: "modulepreload",
++    rel: "modulepreload-shim",
+     href: path,
+     crossOrigin: props.crossOrigin
+   })), initialScripts, deferredScripts);
