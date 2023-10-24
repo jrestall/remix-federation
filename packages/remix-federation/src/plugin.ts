@@ -19,6 +19,8 @@ const defaultOptions = {
   dev: true,
 };
 
+export const defaultExternals = ["react", "react-dom", "react/jsx-dev-runtime"];
+
 export type FederationConfig = {
   options?: Partial<BuildHelperParams["options"]>;
   adapter?: BuildHelperParams["adapter"];
@@ -27,7 +29,7 @@ export type FederationConfig = {
 /**
  * Creates a Vite plugin that implements native module federation for remix
  *
- * @param params - The native federation build helper params.
+ * @param federationConfig - The federation config.
  *
  * @returns The Vite plugin.
  */
@@ -41,9 +43,9 @@ export default async function vitePluginRemixFederation(
       // Strip out react deps since we use esm.sh to provide these
       const config = { ...federationConfig };
       config.shared ??= {};
-      delete config.shared.react;
-      delete config.shared["react-dom"];
-      delete config.shared["react/jsx-dev-runtime"];
+      for (const external of defaultExternals) {
+        delete config.shared[external];
+      }
 
       writeFederationConfig(config, resolvedOptions);
     }
@@ -57,10 +59,7 @@ export default async function vitePluginRemixFederation(
   // Initial init to get externals for the externalize plugin
   await initFederation(federationConfig?.adapter!);
 
-  const externals = [
-    ...federationBuilder.externals,
-    ...["react", "react-dom", "react/jsx-dev-runtime"],
-  ];
+  const externals = [...federationBuilder.externals, ...defaultExternals];
   const sharedPlugins: Plugin[] = [
     externalize({ externals: externals }),
     {
@@ -116,6 +115,10 @@ export default async function vitePluginRemixFederation(
     },
   ];
 
+  async function buildFederation() {
+    return federationBuilder.build();
+  }
+
   return [
     {
       name: "vite-plugin-remix-federation",
@@ -126,11 +129,11 @@ export default async function vitePluginRemixFederation(
       },
       async buildStart() {
         // Build native federation files such as remoteEntry.js and shared deps
-        await federationBuilder.build();
+        await buildFederation();
       },
       async configureServer() {
         // Rebuild on dev server restart
-        await federationBuilder.build();
+        await buildFederation();
       },
     },
     ...sharedPlugins,

@@ -27,6 +27,11 @@ export function setupFederation() {
   // Yea... not ideal.
   globalThis.fetch = async (input, init) => {
     if (typeof input === "string") {
+      // Native federation doesn't support relative paths so we fix here
+      // This is just a partial fix as all the import maps are relative also.
+      if (input === "./remoteEntry.json") input = "/remoteEntry.json";
+
+      // Set a _remoteData search param so the splat route knows where to route to
       try {
         const url = new URL(input);
         const routeId = url.searchParams.get("_data");

@@ -6,6 +6,7 @@ import type {
 import type { EntryPoint } from "@softarc/native-federation/src/lib/core/build-adapter";
 import { parse } from "path";
 import { InlineConfig, Plugin, Rollup, build } from "vite";
+import { defaultExternals } from "./plugin";
 
 // A Vite based build adapter for @softarc/native-federation
 export function createViteAdapter(plugins: Plugin[]): BuildAdapter {
@@ -14,9 +15,8 @@ export function createViteAdapter(plugins: Plugin[]): BuildAdapter {
 
     if (!entryPoints?.length) return [];
 
-    external.push("react", "react-dom", "react/jsx-dev-runtime");
-
     const fileNames: BuildResult[] = [];
+    external.push(...defaultExternals);
 
     const addChunkFileNames = (output: Rollup.RollupOutput) => {
       for (const chunk of output.output) {
