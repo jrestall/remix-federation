@@ -24,6 +24,9 @@
           ],
           "remix-federation/vite": [
             "../../packages/remix-federation/src/vite.ts"
+          ],
+          "remix-federation/runtime": [
+            "../../packages/remix-federation/src/runtime.ts"
           ]
         }
     },

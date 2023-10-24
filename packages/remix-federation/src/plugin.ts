@@ -12,7 +12,7 @@ import { writeFederationConfig } from "./config";
 
 const defaultOptions = {
   workspaceRoot: process.cwd(),
-  outputPath: "public/build",
+  outputPath: "public/",
   tsConfig: "tsconfig.json",
   federationConfig: "node_modules/.tmp/federation.config.cjs",
   verbose: false,
@@ -38,7 +38,14 @@ export default async function vitePluginRemixFederation(
     const resolvedOptions = { ...defaultOptions, ...federationConfig?.options };
 
     if (initConfig && federationConfig && !federationConfig.options?.federationConfig) {
-      writeFederationConfig(federationConfig, resolvedOptions);
+      // Strip out react deps since we use esm.sh to provide these
+      const config = { ...federationConfig };
+      config.shared ??= {};
+      delete config.shared.react;
+      delete config.shared["react-dom"];
+      delete config.shared["react/jsx-dev-runtime"];
+
+      writeFederationConfig(config, resolvedOptions);
     }
 
     return federationBuilder.init({
@@ -50,15 +57,19 @@ export default async function vitePluginRemixFederation(
   // Initial init to get externals for the externalize plugin
   await initFederation(federationConfig?.adapter!);
 
+  const externals = [
+    ...federationBuilder.externals,
+    ...["react", "react-dom", "react/jsx-dev-runtime"],
+  ];
   const sharedPlugins: Plugin[] = [
-    externalize({ externals: federationBuilder.externals }),
+    externalize({ externals: externals }),
     {
       name: "vite-plugin-remix-federation-externals",
       enforce: "post",
       config: () => ({
         build: {
           rollupOptions: {
-            external: federationBuilder.externals,
+            external: externals,
           },
         },
       }),
@@ -69,8 +80,7 @@ export default async function vitePluginRemixFederation(
       config(config) {
         // We need to ssr transform @remix-run/react so don't externalize it from vite's transform module
         // https://vitejs.dev/guide/ssr.html#ssr-externals
-        config.ssr ??= {};
-        config.ssr.noExternal ??= [];
+        // TODO: Get @remix-run/react patch below working.
       },
       transform(code, id) {
         // Transform Remix's LiveReload component to use <script type="module-shim" />
@@ -116,11 +126,11 @@ export default async function vitePluginRemixFederation(
       },
       async buildStart() {
         // Build native federation files such as remoteEntry.js and shared deps
-        await federationBuilder.build({ skipMappingsAndExposed: true });
+        await federationBuilder.build();
       },
       async configureServer() {
         // Rebuild on dev server restart
-        await federationBuilder.build({ skipMappingsAndExposed: true });
+        await federationBuilder.build();
       },
     },
     ...sharedPlugins,

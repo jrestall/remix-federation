@@ -13,11 +13,11 @@ const federationConfig: FederationConfig = {
   shared: {
     react: { singleton: true },
     "react-dom": { singleton: true },
+    "react/jsx-dev-runtime": { singleton: true },
     "@remix-run/router": { singleton: true },
     "@remix-run/react": { singleton: true },
     "react-router": { singleton: true },
     "react-router-dom": { singleton: true },
-    "react/jsx-dev-runtime": { singleton: true },
   },
 };
 

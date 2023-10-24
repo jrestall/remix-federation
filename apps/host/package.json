@@ -13,29 +13,31 @@
     "@remix-run/css-bundle": "0.0.0-nightly-63a5c6c-20231017",
     "@remix-run/node": "0.0.0-nightly-63a5c6c-20231017",
     "@remix-run/react": "0.0.0-nightly-63a5c6c-20231017",
-    "@remix-run/serve": "0.0.0-nightly-63a5c6c-20231017",
     "@remix-run/router": "1.10.0",
+    "@remix-run/serve": "0.0.0-nightly-63a5c6c-20231017",
+    "@softarc/native-federation": "^2.0.4",
+    "@softarc/native-federation-esbuild": "^2.0.4",
+    "@softarc/native-federation-runtime": "^2.0.4",
+    "isbot": "^3.6.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router": "6.17.0",
     "react-router-dom": "6.17.0",
     "remix-federation": "workspace:*",
-    "@softarc/native-federation": "^2.0.4",
-    "@softarc/native-federation-esbuild": "^2.0.4",
-    "isbot": "^3.6.8",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "remix-utils": "^7.1.0"
   },
   "devDependencies": {
     "@remix-run/dev": "0.0.0-nightly-63a5c6c-20231017",
     "@remix-run/eslint-config": "0.0.0-nightly-63a5c6c-20231017",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
+    "eslint": "^8.38.0",
     "prettier": "^3.0.3",
     "turbo": "^1.10.15",
     "typescript": "^5.2.2",
     "vite": "^4.5.0",
     "vite-tsconfig-paths": "^4.2.1",
-    "vitest": "^0.34.6",
-    "eslint": "^8.38.0"
+    "vitest": "^0.34.6"
   },
   "engines": {
     "node": ">=18.0.0"

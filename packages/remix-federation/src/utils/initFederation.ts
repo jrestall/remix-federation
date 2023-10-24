@@ -1,6 +1,22 @@
 import { matchRoutes } from "@remix-run/react";
+import { initFederation as nativeInitFederation } from "@softarc/native-federation-runtime";
 
 const IS_FETCH_PATCHED: unique symbol = Symbol("isFetchPatched");
+
+type Imports = Record<string, string>;
+type Scopes = Record<string, Imports>;
+export type ImportMap = {
+  imports: Imports;
+  scopes: Scopes;
+};
+
+export async function initFederation(
+  remotesOrManifestUrl?: string | Record<string, string> | undefined,
+): Promise<ImportMap> {
+  setupFederation();
+
+  return nativeInitFederation(remotesOrManifestUrl);
+}
 
 export function setupFederation() {
   const pureFetch = globalThis.fetch;
@@ -11,16 +27,18 @@ export function setupFederation() {
   // Yea... not ideal.
   globalThis.fetch = async (input, init) => {
     if (typeof input === "string") {
-      const url = new URL(input);
-      const routeId = url.searchParams.get("_data");
-      if (routeId) {
-        const splatRouteId = getMatchingSplatRoute(url);
-        if (splatRouteId && routeId !== splatRouteId) {
-          url.searchParams.set("_data", splatRouteId);
-          url.searchParams.set("_remoteData", routeId);
-          input = url;
+      try {
+        const url = new URL(input);
+        const routeId = url.searchParams.get("_data");
+        if (routeId) {
+          const splatRouteId = getMatchingSplatRoute(url);
+          if (splatRouteId && routeId !== splatRouteId) {
+            url.searchParams.set("_data", splatRouteId);
+            url.searchParams.set("_remoteData", routeId);
+            input = url;
+          }
         }
-      }
+      } catch (ex) {}
     }
 
     // @ts-ignore

@@ -4,14 +4,17 @@ import type {
   BuildResult,
 } from "@softarc/native-federation/build";
 import type { EntryPoint } from "@softarc/native-federation/src/lib/core/build-adapter";
+import { parse } from "path";
 import { InlineConfig, Plugin, Rollup, build } from "vite";
 
 // A Vite based build adapter for @softarc/native-federation
 export function createViteAdapter(plugins: Plugin[]): BuildAdapter {
   return async (options: BuildAdapterOptions): Promise<BuildResult[]> => {
-    const { entryPoints, outdir } = options;
+    const { entryPoints, outdir, external, hash } = options;
 
     if (!entryPoints?.length) return [];
+
+    external.push("react", "react-dom", "react/jsx-dev-runtime");
 
     const fileNames: BuildResult[] = [];
 
@@ -23,7 +26,7 @@ export function createViteAdapter(plugins: Plugin[]): BuildAdapter {
 
     // Builds each shared library independently so that no shared chunks are created between libs
     for (const entryPoint of entryPoints) {
-      const outputs = await buildLibrary(entryPoint, outdir, plugins);
+      const outputs = await buildLibrary(entryPoint, outdir, plugins, external);
 
       if (Array.isArray(outputs)) {
         outputs.forEach((output) => addChunkFileNames(output));
@@ -36,7 +39,13 @@ export function createViteAdapter(plugins: Plugin[]): BuildAdapter {
   };
 }
 
-async function buildLibrary(entryPoint: EntryPoint, outDir: string, plugins: Plugin[]) {
+async function buildLibrary(
+  entryPoint: EntryPoint,
+  outDir: string,
+  plugins: Plugin[],
+  external: string[],
+) {
+  const outName = parse(entryPoint.outName).base;
   const buildConfig: InlineConfig = {
     configFile: false,
     define: {
@@ -47,11 +56,14 @@ async function buildLibrary(entryPoint: EntryPoint, outDir: string, plugins: Plu
       emptyOutDir: false,
       copyPublicDir: false,
       lib: {
-        entry: { [entryPoint.outName]: entryPoint.fileName },
+        entry: { [outName]: entryPoint.fileName },
         fileName: (_format, entryName) => entryName,
         formats: ["es"],
       },
       minify: "esbuild",
+      rollupOptions: {
+        external: external,
+      },
     },
     plugins,
   };
