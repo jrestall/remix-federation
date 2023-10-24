@@ -7,7 +7,7 @@
 import { RemixBrowser } from "@remix-run/react";
 import { startTransition, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
-import { setupFederation } from "./utils/federation";
+import { setupFederation } from "remix-federation";
 
 setupFederation();
 
@@ -16,6 +16,6 @@ startTransition(() => {
     document,
     <StrictMode>
       <RemixBrowser />
-    </StrictMode>
+    </StrictMode>,
   );
 });

@@ -4,6 +4,7 @@ export async function updateRoutes(
   assetsManifest: AssetsManifest,
   shouldRevalidate: boolean = true,
 ) {
+  // @ts-ignore
   const router = window.__remixRouter;
 
   // This should never happen, but we are using internal APIs...
@@ -15,7 +16,6 @@ export async function updateRoutes(
   Object.assign(window.__remixManifest.routes, assetsManifest.routes);
 
   // Create new routes
-  // @ts-expect-error
   let routes = router.createRoutesForHMR(
     false,
     window.__remixManifest.routes,

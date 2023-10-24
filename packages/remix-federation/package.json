@@ -32,7 +32,8 @@
   },
   "homepage": "https://github.com/jrestall/remix-federation#readme",
   "peerDependencies": {
-    "@softarc/native-federation": "^2.0.4"
+    "@softarc/native-federation": "^2.0.4",
+    "@remix-run/react": ">= 2.1.0"
   },
   "devDependencies": {
     "magic-string": "^0.30.5",

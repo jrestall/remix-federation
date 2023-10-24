@@ -15,7 +15,7 @@ export function setupFederation() {
       const routeId = url.searchParams.get("_data");
       if (routeId) {
         const splatRouteId = getMatchingSplatRoute(url);
-        if (splatRouteId) {
+        if (splatRouteId && routeId !== splatRouteId) {
           url.searchParams.set("_data", splatRouteId);
           url.searchParams.set("_remoteData", routeId);
           input = url;

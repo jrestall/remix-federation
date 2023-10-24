@@ -4,7 +4,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "dev": "vite dev --port 5174",
+    "dev": "vite dev --port 6173",
     "build": "vite build && vite build --ssr",
     "serve": "node server.js",
     "typecheck": "tsc"

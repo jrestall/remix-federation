@@ -1,7 +1,9 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
     "display": "Default",
+    
     "compilerOptions": {
+        "types": ["@remix-run/node", "@remix-run/dev"],
         "composite": false,
         "declaration": true,
         "declarationMap": true,
@@ -17,9 +19,12 @@
         "strict": true,
         "strictNullChecks": true,
         "paths": {
-            "remix-federation/*": [
-                "packages/remix-federation/src/*"
-            ]
+          "remix-federation": [
+            "../../packages/remix-federation/src/index.ts"
+          ],
+          "remix-federation/vite": [
+            "../../packages/remix-federation/src/vite.ts"
+          ]
         }
     },
     "exclude": [

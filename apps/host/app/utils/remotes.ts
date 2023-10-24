@@ -1,3 +1,3 @@
-export const remotes: Record<string, string> = {
-  remote1: "http://localhost:5174",
+export const remotes = {
+  remote1: "http://localhost:6173",
 };
